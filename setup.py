@@ -10,7 +10,7 @@ def read(*paths):
 setup(
     name='awesomelib',
     version='0.1.0',
-    py_modules=['awesome'],
+    packages=['awesome'],
     url='https://github.com/tmr232/awesomelib',
     license='MIT',
     author='Tamir Bahar',
