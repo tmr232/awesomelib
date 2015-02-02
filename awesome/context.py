@@ -2,6 +2,7 @@ import os
 import sys
 from contextlib import contextmanager
 from cStringIO import StringIO
+import time
 
 
 @contextmanager
@@ -53,3 +54,35 @@ def redirect_stderr(stream=None):
 
     finally:
         sys.stderr = original_stderr
+
+
+class Timer(object):
+    def __init__(self):
+        self._start_time = None
+        self._end_time = None
+
+    def __enter__(self):
+        self._start_time = time.clock()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self._end_time = time.clock()
+
+    @property
+    def running(self):
+        return self._end_time is None and self._start_time is not None
+
+    @property
+    def terminated(self):
+        return self._end_time is not None
+
+
+    @property
+    def elapsed(self):
+        if self._end_time is None:
+            return time.clock() - self._start_time
+
+        return self._end_time - self._start_time
+
+    def __repr__(self):
+        return "Timer(elapsed={}, running={})".format(self.elapsed, self.running)
