@@ -191,3 +191,21 @@ def tee_lookahead(t, i):
     for value in islice(t.__copy__(), i, None):
         return value
     raise IndexError(i)
+
+
+def irange(start, end=None, step=1):
+    if end is None:
+        end = start
+        start = 0
+
+    if cmp(start, end) * step >= 0:
+        return
+
+    value = start
+    while cmp(start, end) * cmp(value, end) > 0:
+        yield value
+        value += step
+
+
+def ilen(iterator):
+    return sum(1 for item in iterator)
