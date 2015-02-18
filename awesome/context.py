@@ -3,6 +3,7 @@ import sys
 from contextlib import contextmanager
 from cStringIO import StringIO
 import time
+from .iterator import consume
 
 
 @contextmanager
@@ -11,6 +12,14 @@ def ignored(*exceptions):
         yield
     except exceptions:
         pass
+
+
+@contextmanager
+def consuming(iterator):
+    try:
+        yield iterator
+    finally:
+        consume(iterator, None)
 
 
 @contextmanager
