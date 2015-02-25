@@ -23,6 +23,14 @@ def consuming(iterator):
 
 
 @contextmanager
+def calling(callable, *args, **kwargs):
+    try:
+        yield
+    finally:
+        callable(*args, **kwargs)
+
+
+@contextmanager
 def change_directory(path):
     original_path = os.getcwdu()
 
