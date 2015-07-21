@@ -209,3 +209,16 @@ def irange(start, end=None, step=1):
 
 def ilen(iterator):
     return sum(1 for item in iterator)
+
+
+def _remove_duplicates(iterable):
+    visited = set()
+    for item in iterable:
+        if item in visited:
+            continue
+        yield item
+        visited.add(item)
+
+
+def remove_duplicates(*iterables):
+    return _remove_duplicates(chain(iterables))
